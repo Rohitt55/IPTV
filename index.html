@@ -283,6 +283,7 @@
     <select id="categoryFilter"><option value="all">সব ক্যাটাগরি</option></select>
     <button class="btn" id="favToggle">★ শুধু ফেভারিট</button>
     <button class="btn" id="importBtn">M3U ইম্পোর্ট</button>
+    <button class="btn btn-danger" id="clearAllBtn">প্লেলিস্ট মুছুন</button>
     <input type="file" id="importFile" accept=".m3u,.m3u8,.txt" style="display:none;">
   </div>
 
@@ -333,6 +334,7 @@ const totalCount = document.getElementById('totalCount');
 const emptyState = document.getElementById('emptyState');
 const favToggle = document.getElementById('favToggle');
 const qualitySelect = document.getElementById('qualitySelect');
+const clearAllBtn = document.getElementById('clearAllBtn');
 
 function resetQualitySelect(){
   qualitySelect.innerHTML = '';
@@ -567,6 +569,16 @@ document.getElementById('addBtn').addEventListener('click', () => {
 favToggle.addEventListener('click', () => {
   showFavOnly = !showFavOnly;
   favToggle.classList.toggle('fav-active', showFavOnly);
+  renderGrid();
+});
+
+clearAllBtn.addEventListener('click', () => {
+  if(channels.length === 0) return;
+  if(!confirm('পুরো প্লেলিস্ট মুছে ফেলতে চান? এই কাজটি ফেরানো যাবে না।')) return;
+  channels = [];
+  stopPlayback();
+  saveChannels();
+  renderTabs();
   renderGrid();
 });
 
